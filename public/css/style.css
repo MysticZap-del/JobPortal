@@ -1,0 +1,39 @@
+body {
+    background: #f4f6f9;
+}
+
+.upload-card {
+    border: 2px dashed #6c757d;
+    padding: 50px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: 0.3s;
+    background: white;
+}
+
+.upload-card:hover {
+    background: #e9ecef;
+    transform: scale(1.02);
+}
+
+.card {
+    border-radius: 12px;
+}
+.upload-box {
+    max-width: 700px;
+    border: 2px dashed #0d6efd;
+    border-radius: 15px;
+    background-color: #f8f9fa;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.upload-box:hover {
+    background-color: #e9f2ff;
+    transform: scale(1.02);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.upload-icon {
+    font-size: 50px;
+}
