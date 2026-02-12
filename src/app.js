@@ -11,9 +11,12 @@ const views_path = path.join(__dirname,'../templates/views');
 const partials_path = path.join(__dirname, '../templates/partials');
 const JWT_SECRET_KEY = 'resume_secret';
 const cookie = require('cookie-parser');
+const auth = require('./middlewares/auth');
 
 app.use(express.static('public'));
 app.use(express.urlencoded({extended: false}));
+app.use(cookie());
+
 
 
 // setting up the view engine
@@ -25,10 +28,12 @@ hbs.registerPartials(partials_path);
 
 
 app.get("/", (req, res) => {
-    res.render('index');
+    const token = req.cookies.jwt;
+    res.render('index', {isLoggedIn: !!token});
 });
 app.get("/results", (req, res) => {
-    res.render('results');
+    const token = req.cookies.jwt;
+    res.render('results', {isLoggedIn: !!token});
 })
 app.get("/login", (req,res) => {
     res.render("login");
@@ -36,6 +41,11 @@ app.get("/login", (req,res) => {
 app.get("/register", (req, res) => {
     res.render("register");
 })
+app.get("/logout", (req, res) => {
+    res.clearCookie("jwt");
+    res.redirect("/login");
+});
+
 app.post("/register", async (req, res) => {
     try {
         const { password, confirmPassword } = req.body;
@@ -87,6 +97,16 @@ app.post("/login", async (req, res) => {
     }
 });
 
+
+
+app.post('/upload', auth, (req, res) => {
+    try{
+        res.redirect('/results');
+    }
+    catch(err){
+        res.send(err);
+    }
+})
 
 
 app.listen(PORT, () => {
